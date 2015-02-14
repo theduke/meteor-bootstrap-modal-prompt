@@ -1,7 +1,8 @@
 Package.describe({
   name: 'theduke:bootstrap-modal-prompt',
   summary: "Show prompts in a bootstrap modal.",
-  version: "0.0.1"
+  version: "0.0.1",
+  git: "https://github.com/theduke/meteor-bootstrap-modal-prompt"
 });
 
 Package.onUse(function (api) {
