@@ -7,7 +7,7 @@ Version: 0.0.1
 ## Installation
 
 ```bash
-meter add theduke:bootstrap-modal-prompt
+meteor add theduke:bootstrap-modal-prompt
 ```
 
 ## Requirements
