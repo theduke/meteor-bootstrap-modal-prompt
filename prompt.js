@@ -14,7 +14,7 @@ BootstrapModalPrompt = {
    */
   prompt: function(options, callback) {
     options = _.extend({
-      title: 'Bootstrap Modal',
+      title: 'Confirmation',
       content: '',
       template: null,
       templateData: {},

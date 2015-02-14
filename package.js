@@ -6,7 +6,6 @@ Package.describe({
 Package.onUse(function (api) {
   var both = ['client', 'server'];
 
-
   api.use('underscore', 'client');
   api.use('templating', 'client');
 
