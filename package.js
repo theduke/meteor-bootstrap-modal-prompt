@@ -7,6 +7,8 @@ Package.describe({
 Package.onUse(function (api) {
   var both = ['client', 'server'];
 
+  api.versionsFrom('METEOR@1.0');
+
   api.use('underscore', 'client');
   api.use('templating', 'client');
 
