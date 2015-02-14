@@ -1,4 +1,5 @@
 Package.describe({
+  name: 'theduke:bootstrap-modal-prompt',
   summary: "Show prompts in a bootstrap modal.",
   version: "0.0.1"
 });
