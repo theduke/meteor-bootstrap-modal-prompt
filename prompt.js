@@ -1,5 +1,3 @@
-console.log('loading from packages dir');
-
 BootstrapModalPrompt = function() {
   var exports = {};
   /*
