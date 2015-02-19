@@ -153,6 +153,11 @@ BootstrapModalPrompt = function() {
       modal.find('.modal-btn-dismiss').remove();
     }
 
+    // if btnOkText is falsey, remove it
+    if (!options.btnOkText) {
+      modal.find('.modal-btn-save').remove();
+    }
+
     modal.on('shown.bs.modal', function() {
       if (options.afterShow) {
         options.afterShow(options, modal.get(0));
