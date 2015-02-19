@@ -2,7 +2,7 @@
 
 This [Atmosphere package](https://atmospherejs.com/theduke/bootstrap-modal-prompt) for [Meteor](http://meteor.com) makes it really easy to show a confirm dialog with custom content to the user, and get the result. You can also use a custom template for the content, and even specify a SimpleSchema to generate a form with AutoForm and get the form data in a callback.
 
-Version: 0.0.1
+Version: 0.0.2
 
 ## Installation
 
@@ -53,6 +53,33 @@ BootstrapModalPrompt.prompt({
   }
 });
 ```
+
+* Render an AutoForm with a SimpleSchema, and receive the data in the callback.
+
+```javascript
+var MyFancySchema = new SimpleSchema({
+  comments: {
+    type: String,
+    min: 20
+  }
+});
+
+BootstrapModalPrompt.prompt({
+    title: "Confirm something",
+    formSchema: MyFancySchema,
+}, function(data) {
+  if (data) {
+    // User confirmed it, so go do something.
+    console.log(data.comments);
+  }
+  else {
+    // User did not confirm, do nothing.
+  }
+});
+```
+
+Hint: if you want to customize the form with {{#autoForm}} or do other javascript stuff,
+use a custom template as shown above!
 
 ## API & Options
 

@@ -18,6 +18,9 @@ BootstrapModalPrompt = {
       content: '',
       template: null,
       templateData: {},
+
+      formSchema: null,
+
       btnDismissText: 'Close',
       btnOkText: 'OK',
 
@@ -62,6 +65,27 @@ BootstrapModalPrompt = {
 
     modal.find('.modal-title').html(options.title);
 
+    // Reset body.
+    var body = modal.find('.modal-body').html('');
+
+    // Function to be called when confirmed.
+    // Defined up here so it can be used in AutoForm submit hook.
+    function onConfirm(data) {
+      if (options.onConfirm) {
+        var flag = options.onConfirm(options, modal.get(0), data);
+        if (flag === false) {
+          return false;
+        }
+      }
+
+      if (options.beforeHide) {
+        options.beforeHide(options, modal.get(0), data);
+      }
+
+      modal.modal('hide');
+      callback(data ? data : true);
+    }
+
     var content = options.content;
     if (options.template) {
       // Render the given template with the specified data and insert it 
@@ -69,8 +93,24 @@ BootstrapModalPrompt = {
       Blaze.renderWithData(
         options.template, 
         options.templateData,
-        modal.find('.modal-body').html('').get(0)
+        body.get(0)
       );
+    }
+    else if (options.formSchema) {
+      // Render the form using the autoform quickForm template. 
+      Blaze.renderWithData(
+        Template.quickForm,
+        {schema: options.formSchema, id: 'bootstrapModalPromptForm'},
+        body.get(0)
+      );
+
+      // Note the important second parameter true for replacing hooks.
+      AutoForm.addHooks('bootstrapModalPromptForm', {
+        onSubmit: function (insertDoc, updateDoc, currentDoc) {
+          onConfirm(insertDoc);
+          return false;
+        }
+      }, true);
     }
     else {
       modal.find('.modal-body').html(content);
@@ -105,20 +145,15 @@ BootstrapModalPrompt = {
       return false;
     });
 
+    
+
     modal.find('.modal-btn-confirm').off().click(function() {
-      if (options.onConfirm) {
-        var flag = options.onConfirm(options, modal.get(0));
-        if (flag === false) {
-          return false;
-        }
+      if (options.formSchema) {
+        modal.find('form').submit();
       }
-
-      if (options.beforeHide) {
-        options.beforeHide(options, modal.get(0));
+      else {
+        onConfirm();
       }
-
-      modal.modal('hide');
-      callback(true);
 
       return false;
     });
