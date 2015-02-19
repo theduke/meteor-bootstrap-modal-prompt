@@ -1,7 +1,7 @@
 console.log('loading from packages dir');
 
-BootstrapModalPrompt = {
-
+BootstrapModalPrompt = function() {
+  var exports = {};
   /*
    * Expected format of options:
    * {
@@ -14,7 +14,7 @@ BootstrapModalPrompt = {
    *   onShown: function() {} // callback function.
    * }
    */
-  prompt: function(options, callback) {
+  exports.prompt = function(options, callback) {
     options = _.extend({
       title: 'Confirmation',
       content: '',
@@ -62,7 +62,7 @@ BootstrapModalPrompt = {
 
     var modalWrap = $('.bs-prompt-modal');
     if (!modalWrap.size()) {
-      modalWrap = this.createModal();
+      modalWrap = createModal();
     }
 
     var modal = modalWrap.find('.modal');
@@ -77,7 +77,7 @@ BootstrapModalPrompt = {
     } else {
       // need to create a dialog if one isn't provided
       if (!dialog.size()) {
-        dialog = this.createModalDialog(modal);  
+        dialog = createModalDialog(modal);  
       }
       
       dialog.find('.modal-title').html(options.title);
@@ -200,17 +200,24 @@ BootstrapModalPrompt = {
     });
 
     modal.modal('show');
-  },
+  };
 
-  createModal: function() {
+  // Dismisses current modal if open
+  exports.dismiss = function(callback) {
+    var modal = $('.modal', '.bs-prompt-modal');
+    modal.modal('hide');
+  }
+
+  var createModal = function() {
     var tpl = '<div class="bs-prompt-modal">' +
                 '<div class="modal fade"></div>' +
               '</div>';
 
     $('body').append(tpl);
     return $('.bs-prompt-modal');
-  },
-  createModalDialog: function($modal) {
+  };
+
+  var createModalDialog = function($modal) {
     var tpl = '<div class="modal-dialog"><div class="modal-content">' +
                   '<div class="modal-header">' +
                     '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
@@ -226,5 +233,7 @@ BootstrapModalPrompt = {
                 '</div></div>';
     $modal.append(tpl);
     return $('.modal-dialog');          
-  }
-};
+  };
+
+  return exports;
+}();
