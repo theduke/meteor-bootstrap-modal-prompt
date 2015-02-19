@@ -69,8 +69,13 @@ BootstrapModalPrompt = {
     var dialog = $('.modal-dialog', modalWrap); 
     var body;
 
-    if (!options.dialogTemplate) {
-
+    if (options.dialogTemplate) {
+      // reset the dialog if it exists as custom template will render it
+      if (dialog.size()) {
+        dialog.remove();
+      }
+    } else {
+      // need to create a dialog if one isn't provided
       if (!dialog.size()) {
         dialog = this.createModalDialog(modal);  
       }
@@ -97,7 +102,8 @@ BootstrapModalPrompt = {
       }
 
       modal.modal('hide');
-      callback(data ? data : true);
+      if (callback)
+        callback(data ? data : true);
     }
 
     var content = options.content;
@@ -174,7 +180,8 @@ BootstrapModalPrompt = {
       }
 
       modal.modal('hide');
-      callback(false);
+      if (callback)
+        callback(false);
 
       return false;
     });
