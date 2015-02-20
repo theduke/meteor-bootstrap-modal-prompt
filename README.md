@@ -17,6 +17,8 @@ You can manually include it in your project, or use one of the many Bootstrap pa
 
 ## Usage
 
+### Prompt
+
 * Show a simple dialog with text content:
 
 ```javascript
@@ -81,6 +83,56 @@ BootstrapModalPrompt.prompt({
 Hint: if you want to customize the form with {{#autoForm}} or do other javascript stuff,
 use a custom template as shown above!
 
+* Render a custom modal-dialog template for ultimate flexibility
+
+```html
+<template name="RequestDemoModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 class="modal-title" id="myModalLabel">We want to hear you out!</h3>
+      </div>
+      {{#autoForm id='requestDemo' schema=requestDemoSchema type="method" meteormethod="requestDemo" resetOnSuccess=false}}
+      <div class="modal-body">
+        <p>Provide us some info to get in touch.</p>
+        {{> afQuickField name="name"}}
+        {{> afQuickField name="email"}}
+        {{> afQuickField name="phone"}}
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-block">Send</button>
+      </div>
+      {{/autoForm}}
+    </div>
+  </div>
+</template>
+```
+
+```javascript
+Template.site.events({
+  'click .js-request-demo': function () {
+    BootstrapModalPrompt.prompt({
+      dialogTemplate: Template.RequestDemoModal
+    });
+  }
+});
+
+Template.RequestDemoModal.helpers({
+  requestDemoSchema: function () {
+    return Schema.RequestDemo;
+  }
+});
+
+AutoForm.hooks({
+  requestDemo: {
+    onSuccess: function(operation, result, template) {
+      BootstrapModalPrompt.dismiss();
+    }
+  }
+});
+```
+
 ## API & Options
 
 BootstrapModalPrompt.prompt(options, callback);
@@ -91,10 +143,11 @@ Option | Description
 ------ | -----------
 title | The modal title
 content | A string that will be used as the modal body content
-template | A Meteor Template instance that should be renderd as the body content (supersedes "content")
+template | A Meteor Template instance that should be rendered as the body content (supersedes "content")
 templateData | an object with data that will be available to the custom template
-btnDismissText | Text of the dismiss button
-btnOkText | Text of the confirm button
+dialogTemplate | A Meteor Template instance that should be rendered as the modal dialog (supersedes 'content' and 'template') (works with templateData)
+btnDismissText | Text of the dismiss button - set to null to hide
+btnOkText | Text of the confirm button - set to null to hide
 beforeShow | Callback that will be called before the modal is displayed. Receives the options and the modal DOM node as arguments
 afterShow | Callback that will be called once the modal is displayed and all transitions are complete. Receives the options and the modal DOM node as arguments
 beforeHide | Callback that will be called before the modal is hidden. Receives the options and the modal DOM node as arguments

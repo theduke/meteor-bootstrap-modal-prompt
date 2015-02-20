@@ -206,7 +206,7 @@ BootstrapModalPrompt = function() {
   };
 
   // Dismisses current modal if open
-  exports.dismiss = function(callback) {
+  exports.dismiss = function() {
     var modal = $('.modal', '.bs-prompt-modal');
     modal.modal('hide');
   }
