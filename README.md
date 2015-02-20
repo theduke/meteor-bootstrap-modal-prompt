@@ -133,6 +133,14 @@ AutoForm.hooks({
 });
 ```
 
+### Dismiss
+
+* Dismiss the current modal
+
+```javascript
+BootstrapModalPrompt.dismiss();
+```
+
 ## API & Options
 
 BootstrapModalPrompt.prompt(options, callback);
