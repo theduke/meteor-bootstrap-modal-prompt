@@ -129,15 +129,15 @@ Template.RequestDemoModal.helpers({
 AutoForm.hooks({
   requestDemo: {
     onSuccess: function(operation, result, template) {
-      BootstrapModalPrompt.dismiss();
+      BootstrapModalPrompt.hide();
     }
   }
 });
 ```
 
-### Dismiss
+### Hide
 
-* Dismiss the current modal
+* Hide the current modal
 
 ```javascript
 BootstrapModalPrompt.hide();
