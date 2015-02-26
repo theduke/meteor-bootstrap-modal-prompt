@@ -83,27 +83,29 @@ BootstrapModalPrompt.prompt({
 Hint: if you want to customize the form with {{#autoForm}} or do other javascript stuff,
 use a custom template as shown above!
 
-* Render a custom modal-dialog template for ultimate flexibility
+* Use a custom dialog template for ultimate flexibility.
 
 ```html
 <template name="RequestDemoModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 class="modal-title" id="myModalLabel">We want to hear you out!</h3>
+  <div class="bs-modal-prompt">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 class="modal-title" id="myModalLabel">We want to hear you out!</h3>
+        </div>
+        {{#autoForm id='requestDemo' schema=requestDemoSchema type="method" meteormethod="requestDemo" resetOnSuccess=false}}
+        <div class="modal-body">
+          <p>Provide us some info to get in touch.</p>
+          {{> afQuickField name="name"}}
+          {{> afQuickField name="email"}}
+          {{> afQuickField name="phone"}}
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary btn-block">Send</button>
+        </div>
+        {{/autoForm}}
       </div>
-      {{#autoForm id='requestDemo' schema=requestDemoSchema type="method" meteormethod="requestDemo" resetOnSuccess=false}}
-      <div class="modal-body">
-        <p>Provide us some info to get in touch.</p>
-        {{> afQuickField name="name"}}
-        {{> afQuickField name="email"}}
-        {{> afQuickField name="phone"}}
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-block">Send</button>
-      </div>
-      {{/autoForm}}
     </div>
   </div>
 </template>
@@ -138,7 +140,7 @@ AutoForm.hooks({
 * Dismiss the current modal
 
 ```javascript
-BootstrapModalPrompt.dismiss();
+BootstrapModalPrompt.hide();
 ```
 
 ## API & Options

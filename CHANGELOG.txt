@@ -2,8 +2,9 @@
   - Initial release.
 * Version 0.0.2: 19.02.2015
   - Added option to render a SimpleSchema as an AutoForm and receive the form data in the callback.
-* Version 0.0.3: 19.02.2015
-  - Added option to render a custom modal-dialog template
-  - Added ability to close modal programatically
+* Version 0.1.0: 26.02.2015
+  - Now using a Meteor template for rendering the dialog
+  - Added option to use a custom dialog template
+  - Added ability to close modal programatically (BootstrapModalPrompt.hide())
   - Wrapped API in closure
   - Added ability to hide cancel and confirm buttons by setting text to null
